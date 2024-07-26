@@ -4,7 +4,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import PrimeVue from 'primevue/config'
-import Lara from '@primevue/themes/lara'
+import Lara from '@/presets/lara'
 
 import App from '@/App.vue'
 import router from '@/router'
@@ -15,15 +15,8 @@ app.use(createPinia())
 app.use(router)
 
 app.use(PrimeVue, {
-  theme: {
-    preset: Lara,
-    options: {
-      cssLayer: {
-        name: 'primevue',
-        order: 'tailwind-base, primevue, tailwind-utilities'
-      }
-    }
-  }
+    unstyled: true
+    //pt: Lara
 })
 
 app.mount('#app')

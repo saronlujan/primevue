@@ -1,86 +1,19 @@
 <template>
-  <div class="flex justify-center card">
-    <AutoComplete
-      v-model="selectedCity"
-      :suggestions="filteredCities"
-      @complete="search"
-      optionLabel="label"
-      optionGroupLabel="label"
-      optionGroupChildren="items"
-      placeholder="Hint: type 'a'"
-    >
-      <template #optiongroup="slotProps">
-        <div class="flex items-center country-item">
-          <img
-            :alt="slotProps.option.label"
-            src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-            :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`"
-            style="width: 18px"
-          />
-          <div>{{ slotProps.option.label }}</div>
-        </div>
-      </template>
-    </AutoComplete>
-  </div>
+    <div class="card flex justify-content-center">
+        <Button label="Show" @click="visible = true" />
+        <Dialog v-model:visible="visible" maximizable modal header="Header" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </Dialog>
+    </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  import { FilterMatchMode, FilterService } from '@primevue/core/api'
-  import AutoComplete from 'primevue/autocomplete'
+    import { ref } from 'vue'
+    import Button from 'primevue/button'
+    import Dialog from 'primevue/dialog'
 
-  const cities = ref()
-  const selectedCity = ref()
-  const filteredCities = ref()
-  const groupedCities = ref([
-    {
-      label: 'Germany',
-      code: 'DE',
-      items: [
-        { label: 'Berlin', value: 'Berlin' },
-        { label: 'Frankfurt', value: 'Frankfurt' },
-        { label: 'Hamburg', value: 'Hamburg' },
-        { label: 'Munich', value: 'Munich' }
-      ]
-    },
-    {
-      label: 'USA',
-      code: 'US',
-      items: [
-        { label: 'Chicago', value: 'Chicago' },
-        { label: 'Los Angeles', value: 'Los Angeles' },
-        { label: 'New York', value: 'New York' },
-        { label: 'San Francisco', value: 'San Francisco' }
-      ]
-    },
-    {
-      label: 'Japan',
-      code: 'JP',
-      items: [
-        { label: 'Kyoto', value: 'Kyoto' },
-        { label: 'Osaka', value: 'Osaka' },
-        { label: 'Tokyo', value: 'Tokyo' },
-        { label: 'Yokohama', value: 'Yokohama' }
-      ]
-    }
-  ])
-
-  const search = (event) => {
-    let query = event.query
-    let newFilteredCities = []
-
-    for (let country of groupedCities.value) {
-      let filteredItems = FilterService.filter(
-        country.items,
-        ['label'],
-        query,
-        FilterMatchMode.CONTAINS
-      )
-      if (filteredItems && filteredItems.length) {
-        newFilteredCities.push({ ...country, ...{ items: filteredItems } })
-      }
-    }
-
-    filteredCities.value = newFilteredCities
-  }
+    const visible = ref(false)
 </script>
